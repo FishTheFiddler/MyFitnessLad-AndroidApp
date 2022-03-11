@@ -1,0 +1,33 @@
+R_DEF: Internal format may change without notice
+local
+color black
+color purple_200
+color purple_500
+color purple_700
+color teal_200
+color teal_700
+color white
+drawable ic_launcher_background
+drawable ic_launcher_foreground
+drawable myfitnessladlogo
+id apply
+id bmi
+id height
+id ibw
+id imageView
+id intake
+id outtake
+id radioFemale
+id radioMale
+id reset
+id results
+id weight
+layout activity_bmi
+layout activity_ibw
+layout activity_main
+layout activity_reset
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name
+string ideal_body_weight
+style Theme.MyFitnessLad
