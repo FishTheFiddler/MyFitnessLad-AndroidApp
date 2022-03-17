@@ -2,25 +2,25 @@ package com.example.myfitnesslad;
 
 public class Meal {
 
-    private int calories;
+    //private int calories;
     private int carbs;
     private int fat;
     private int protein;
 
-    public Meal (int calories, int carbs, int fat, int protein){
-        this.calories = calories;
+    public Meal (int carbs, int fat, int protein){
         this.carbs = carbs;
         this.fat = fat;
         this.protein = protein;
     }
 
     // Calories getters and setters
-    public void setCalories(int calories2){
+    /* public void setCalories(int calories2){
         this.calories = calories2;
     }
     public int getCalories(){
         return this.calories;
     }
+    */
 
     // Carbs getters and setters
     public void setCarbs(int carbs2){
@@ -46,4 +46,38 @@ public class Meal {
         return this.protein;
     }
 
+    //Calorie Calculation from carbs, fats and protein (in grams)
+    public int calculateCalories() {
+        return (carbs*4)+(protein*4)+(fat*9);
+    }
+
+    //NOTE: when person class is implemented have this function have a gender parameter
+    public boolean ocCalories(int totalCalories)
+    {
+        if (totalCalories > 2250){
+            return true;
+        }
+        return false;
+    }
+    public boolean ocCarbs(int totalCarbs)
+    {
+        if (totalCarbs > 350){
+            return true;
+        }
+        return false;
+    }
+    public boolean ocFats(int totalFats)
+    {
+        if (totalFats > 80){
+            return true;
+        }
+        return false;
+    }
+    public boolean ocProtein(int totalProtein)
+    {
+        if (totalProtein > 60){
+            return true;
+        }
+        return false;
+    }
 }
