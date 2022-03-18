@@ -28,6 +28,10 @@ public class Intake extends AppCompatActivity {
 
         int calorieInput=0;
 
+        //int carbsInput = 0;
+        //int fatsInput = 0;
+        //int proteinInput = 0;
+
         int carbsInput = Integer.parseInt(inputCarbs.getText().toString());
         int fatsInput = Integer.parseInt(inputFats.getText().toString());
         int proteinInput = Integer.parseInt(inputProtein.getText().toString());
@@ -50,12 +54,16 @@ public class Intake extends AppCompatActivity {
             ocBox.setText(s);
             totalCalories.setText("" + tempCalories);
         }
-        else
-        {
+        else {
             totalCalories.setText("" + inputCalories.getText().toString());
-            if (calorieInput<2200) { ocBox.setText("Balanced"); }
-            else{ ocBox.setText("Overall high calorie intake!"); }
+            if (calorieInput < 2200) {
+                ocBox.setText("Balanced");
+            } else {
+                ocBox.setText("Overall high calorie intake!");
+            }
         }
         //have the calorie data sent to mainactivity for overall person health data
+        //TODO: CLEAR FIELDS FUNCTION
+        //TODO: SEND CALORIE DATA TO MAIN
     }
 }
