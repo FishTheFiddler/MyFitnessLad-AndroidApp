@@ -51,7 +51,7 @@ public class Meal {
         return (carbs*4)+(protein*4)+(fat*9);
     }
 
-    //NOTE: when person class is implemented have this function have a gender parameter
+    //TODO: when person class is implemented have this function have a gender parameter
     public boolean ocCalories(int totalCalories)
     {
         if (totalCalories > 2250){
