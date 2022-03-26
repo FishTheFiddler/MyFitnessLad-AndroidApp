@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     static int age = 0;
     static int activityLevel = 0;
     static int caloriesConsumed = 0;
-
     static boolean informationEntered = false;
 
     @Override
