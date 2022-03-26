@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onResume() {
-        super.onResume();  // Always call the superclass method first
+        super.onResume();  // Calling the superclass method first
         // Read the user file "profile.txt", if it doesn't exist yet due to first time users, no values will be displayed
         ReadFile();
         // Read the calorie file "caloriesConsumed.txt" if it doesn't exist yet, default is 0
