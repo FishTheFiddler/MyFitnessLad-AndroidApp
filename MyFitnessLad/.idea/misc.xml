@@ -3,13 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/wessp/AndroidStudioProjects/MyFitnessLad-AndroidApp-main/MyFitnessLad/app/src/main/res/layout/activity_bmi.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/wessp/AndroidStudioProjects/MyFitnessLad-AndroidApp-main/MyFitnessLad/app/src/main/res/layout/activity_history.xml" value="0.19427083333333334" />
+        <entry key="..\:/Users/wessp/AndroidStudioProjects/MyFitnessLad-AndroidApp-main/MyFitnessLad/app/src/main/res/layout/activity_ibw.xml" value="0.19427083333333334" />
+        <entry key="..\:/Users/wessp/AndroidStudioProjects/MyFitnessLad-AndroidApp-main/MyFitnessLad/app/src/main/res/layout/activity_intake.xml" value="0.264" />
+        <entry key="..\:/Users/wessp/AndroidStudioProjects/MyFitnessLad-AndroidApp-main/MyFitnessLad/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/wessp/AndroidStudioProjects/MyFitnessLad/app/src/main/res/layout/activity_bmi.xml" value="0.176" />
         <entry key="..\:/Users/wessp/AndroidStudioProjects/MyFitnessLad/app/src/main/res/layout/activity_ibw.xml" value="0.17083333333333334" />
         <entry key="..\:/Users/wessp/AndroidStudioProjects/MyFitnessLad/app/src/main/res/layout/activity_intake.xml" value="0.2" />
         <entry key="..\:/Users/wessp/AndroidStudioProjects/MyFitnessLad/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/wessp/AndroidStudioProjects/MyFitnessLad/app/src/main/res/layout/activity_reset.xml" value="0.72" />
-        <entry key="..\:/Users/wessp/Documents/GitHub/MyFitnessLad-AndroidApp/MyFitnessLad/app/src/main/res/layout/activity_intake.xml" value="0.18541666666666667" />
-        <entry key="..\:/Users/wessp/Documents/GitHub/MyFitnessLad-AndroidApp/MyFitnessLad/app/src/main/res/layout/activity_main.xml" value="0.18541666666666667" />
       </map>
     </option>
   </component>

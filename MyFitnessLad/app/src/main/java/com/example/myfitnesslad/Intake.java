@@ -1,40 +1,32 @@
 package com.example.myfitnesslad;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-//import com.opencsv.CSVReader;
-//import com.opencsv.CSVWriter;
+
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.sql.Timestamp;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class Intake extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Use the activity_intake.xml file
         setContentView(R.layout.activity_intake);
-        LoadData();
+
+        //Upon creation, load the
+        //LoadData();
 
     }
 
@@ -93,16 +85,17 @@ public class Intake extends AppCompatActivity {
         }
 
         try {
+            AddCaloriesConsumed(Integer.parseInt(inputCalories.getText().toString()));
             SaveData(inputCalories.getText().toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        LoadData();
     }
 
     // Will save the calorie information along with a time stamp
     void SaveData(String calories) throws IOException {
+
+        // MainActivity.caloriesConsumed += Integer.parseInt(calories);
 
         LocalTime time = null;
         String finalTime = "";
@@ -139,80 +132,26 @@ public class Intake extends AppCompatActivity {
                 }
             }
         }
-        //String csv = (Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyCsvFile.csv"); // Here csv file name is MyCsvFile.csv
-        /*
-                try {
-                    Log.d(this.getLocalClassName(),"button clicked");
-
-                    File csv = new File (Environment.getExternalStorageDirectory() + "/Meal.csv");
-                    Log.d(this.getLocalClassName(),"csv variable");
-                    CSVWriter writer = null;
-                    if (!csv.exists()) {
-                        Log.d(this.getLocalClassName(),"if statement reached");
-                        // creates the missing folders for this file
-                        csv.mkdirs();
-                    }
-                    Log.d(this.getLocalClassName(),"about to start writer");
-                    writer = new CSVWriter(new FileWriter(csv.getAbsolutePath()));
-                    Log.d(this.getLocalClassName(),"after writer");
-
-                    List<String[]> data = new ArrayList<String[]>();
-                    data.add(new String[]{"Country", "Capital"});
-                    data.add(new String[]{"India", "New Delhi"});
-                    data.add(new String[]{"United States", "Washington D.C"});
-                    data.add(new String[]{"Germany", "Berlin"});
-
-                    Log.d(this.getLocalClassName(),"about to save");
-                    writer.writeAll(data); // data is adding to csv
-                    Log.d(this.getLocalClassName(),"saved");
-                    writer.close();
-                    //callRead();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Toast.makeText(this, "Error Saving Data", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-        */
-
-        /* //String csv = (Environment.getExternalStorageDirectory().getAbsolutePath() + "/Meal.csv"); // Here csv file name is MyCsvFile.csv
-        File csv = new File (Environment.getExternalStorageDirectory() + "/Meal.csv");
-        try {
-            CSVWriter writer = new CSVWriter(new FileWriter(csv.getAbsolutePath()));
-
-            List<String[]> mealCsv = new ArrayList<String[]>();
-            mealCsv.add(new String[]{"Calories Consumed"});
-            mealCsv.add(new String[]{String.valueOf(tempCalories)});
-
-            writer.writeAll(mealCsv); // data is adding to csv
-
-            writer.close();
-            // callRead();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Error Saving Data", Toast.LENGTH_SHORT).show();
-
-        }
-    }*/
     }
 
-    void LoadData() {
+
+    void AddCaloriesConsumed(int newCalories){
         FileInputStream fis = null;
+        int tempCalories = 0;
+        String output = "";
 
         try {
-            fis = openFileInput("meals.txt");
+            fis = openFileInput("caloriesConsumed.txt");
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr);
             StringBuilder sb = new StringBuilder();
             String text;
 
             while ((text = br.readLine()) != null) {
-                sb.append(text).append("\n");
+                sb.append(text);
             }
-
-            TextView historyBox = findViewById(R.id.historyBox);
-            historyBox.setText(sb.toString());
-
+            output = sb.toString();
+            tempCalories = Integer.parseInt(output);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -226,29 +165,14 @@ public class Intake extends AppCompatActivity {
                 }
             }
         }
-        /*
-        try {
-            File csv = new File(Environment.getExternalStorageDirectory() + "/MyCsvFile.csv");
-            CSVReader reader = new CSVReader(new FileReader(csv.getAbsolutePath()));
-            String[] nextLine;
-            while ((nextLine = reader.readNext()) != null) {
-                // nextLine[] is an array of values from the line
-                System.out.println(nextLine[0] + nextLine[1] + "etc...");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this, "The specified file was not found", Toast.LENGTH_SHORT).show();
-        }
-    }*/
-    }
 
-    public void ResetHistory(View view) {
+        tempCalories += newCalories;
 
         FileOutputStream fos = null;
-
         try {
-            fos = openFileOutput("meals.txt", MODE_PRIVATE);
-            fos.write("".getBytes());
+            //String output = String.valueOf(tempCalories);
+            fos = openFileOutput("caloriesConsumed.txt", MODE_PRIVATE);
+            fos.write(String.valueOf(tempCalories).getBytes());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -262,7 +186,6 @@ public class Intake extends AppCompatActivity {
                 }
             }
         }
-        LoadData();
     }
 
     public void ClearFields(View view){
@@ -275,11 +198,8 @@ public class Intake extends AppCompatActivity {
         inputFats.getText().clear();
         inputProtein.getText().clear();
         inputCalories.getText().clear();
-
     }
 
 }
-
-
 
         //TODO: SEND CALORIE DATA TO MAIN
