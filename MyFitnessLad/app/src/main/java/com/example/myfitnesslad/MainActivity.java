@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Read the user file "profile.txt", if it doesn't exist yet due to first time users, no values will be displayed
         ReadFile();
-        //
+        // Read the calorie file "caloriesConsumed.txt" if it doesn't exist yet, default is 0
         ReadCalorieFile();
         // Displays the values based on the file "profile.txt"
         DisplayInformation();
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();  // Always call the superclass method first
         // Read the user file "profile.txt", if it doesn't exist yet due to first time users, no values will be displayed
         ReadFile();
-        //
+        // Read the calorie file "caloriesConsumed.txt" if it doesn't exist yet, default is 0
         ReadCalorieFile();
         // Displays the values based on the file "profile.txt"
         DisplayInformation();
@@ -103,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Start the next activity
         startActivity(IntakeIntent);
-
     }
 
     // This function will load the History activity to view meal History
@@ -128,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Start the next activity
         startActivity(resetIntent);
-
     }
 
     // Height getters and setters
@@ -195,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // This function
+    // This function will open the "profile.txt" file and insert the values into correct variables
     void ReadFile(){
         FileInputStream fis = null;
 
@@ -238,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // This function
+    // This function will open the "caloriesConsumed.txt" file and insert the values into variables
     void ReadCalorieFile() {
         FileInputStream fis = null;
         int tempCalories = 0;
