@@ -130,12 +130,21 @@ public class MainActivity extends AppCompatActivity {
         TextView genderValue = findViewById(R.id.genderValue);
         TextView activityLevelValue = findViewById(R.id.activityLevel);
 
+        TextView loseValue = findViewById(R.id.loseWeight);
+        TextView maintainValue = findViewById(R.id.maintainWeight);
+        TextView gainValue = findViewById(R.id.gainWeight);
+
         if (informationEntered){
             heightValue.setText("Height: " + getHeight() + " inches.");
             weightValue.setText("Weight: " + getWeight() + " pounds.");
             ageValue.setText("Age: " + getAge() + " years old.");
             genderValue.setText("Gender: " + IdentifyGender() + ".");
             activityLevelValue.setText("Activity Level (0-3): " + getActivityLevel());
+            int maintenanceCalories = (int) (weight * 15);
+            loseValue.setText("" + (maintenanceCalories - 300));
+            maintainValue.setText("" + (maintenanceCalories));
+            gainValue.setText("" + (maintenanceCalories + 300));
+
         }
 
         else {
@@ -144,6 +153,9 @@ public class MainActivity extends AppCompatActivity {
             ageValue.setText("Age: Not Entered.");
             genderValue.setText("Gender: Not Entered.");
             activityLevelValue.setText("Activity Level: Not Entered");
+            loseValue.setText("N/A");
+            maintainValue.setText("N/A");
+            gainValue.setText("N/A");
         }
     }
 
