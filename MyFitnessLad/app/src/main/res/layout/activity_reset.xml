@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ResetValues">
+    tools:context=".ResetValues"
+    android:background="#FCFBF2">
 
     <!-- TITLE -->
     <TextView
@@ -65,6 +66,8 @@
         android:id="@+id/apply"
         android:layout_width="171dp"
         android:layout_height="40dp"
+        android:backgroundTint="#FF6E79"
+        app:cornerRadius="16dp"
         android:onClick="apply"
         android:text="Submit"
         android:textSize="14sp"
