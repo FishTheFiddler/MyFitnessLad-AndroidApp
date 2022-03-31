@@ -1,8 +1,6 @@
 package com.example.myfitnesslad;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,23 +24,31 @@ public class Intake extends AppCompatActivity {
         // Use the activity_intake.xml file
         setContentView(R.layout.activity_intake);
 
-        //Upon creation, load the
-        //LoadData();
-
     }
 
     public void CreateMeal(View view) {
 
+        // These are all the fields and elements from activity_intake.xml
         EditText inputCarbs = findViewById(R.id.inputCarbs);
         EditText inputFats = findViewById(R.id.inputFats);
         EditText inputProtein = findViewById(R.id.inputProtein);
         EditText inputCalories = findViewById(R.id.inputCalories);
         TextView totalCalories = findViewById(R.id.totalCalories);
         TextView ocBox = findViewById(R.id.ocBox);
+        // Create a new instance of the "Meal.java" class
         Meal meal;
 
+        /* TODO: This whole section requires Data validation. If a user enters a string or a
+           TODO: negative, it will just crash the app.  */
+
+        // Declare and instantiate variables to 0.
         int calorieInput = 0, carbsInput = 0, fatsInput = 0, proteinInput = 0;
 
+        // If the calorie box DOES have values in it,  then that is our calorie value and we
+        // can proceed by creating a new meal with that information
+        // ------------------------------------------------------
+        // If the calorie box DOESN'T values in it,  then we will grab values from our other fields
+        // and create a meal that way. Those parameters will calculate our calories later.
         if (!inputCalories.getText().toString().isEmpty()) {
             calorieInput = Integer.parseInt(inputCalories.getText().toString());
             meal = new Meal(calorieInput,carbsInput, fatsInput, proteinInput);
@@ -53,7 +59,10 @@ public class Intake extends AppCompatActivity {
             meal = new Meal(calorieInput,carbsInput, fatsInput, proteinInput);
         }
 
-        //override when user knows calories
+        // If the calorie box DOES have values in it, this will be overlooked
+        // ------------------------------------------------------
+        // If the calorie box DOESN'T values in it, this will calculate the calories using other
+        // values.
         if (calorieInput <= 0) {
             calorieInput = meal.calculateCalories();
             System.out.println(calorieInput);
@@ -76,17 +85,16 @@ public class Intake extends AppCompatActivity {
             ocBox.setText(s);
             totalCalories.setText("" + calorieInput);
         } else {
-            System.out.println("ANOTHER ELSE");
             totalCalories.setText("" + inputCalories.getText().toString());
             if (calorieInput < 2200) {
-                System.out.println("1");
                 ocBox.setText("Balanced");
             } else {
-                System.out.println("2");
                 ocBox.setText("Overall high calorie intake!");
             }
         }
 
+        // Once we ahve calculated how many calories we have consumed, we must save this
+        // information to our "meals.txt" (history) and to our "caloriesConsumed.txt"
         try {
             AddCaloriesConsumed(calorieInput);
             SaveData(String.valueOf(calorieInput));
@@ -136,6 +144,8 @@ public class Intake extends AppCompatActivity {
     }
 
 
+    // Opens the file caloriesConsumed.txt and will add our calories eaten to the existing value
+    // Example: Open .txt, read 500 from the .txt... Add 300 + 500...write 800 back to the .txt
     void AddCaloriesConsumed(int newCalories){
         FileInputStream fis = null;
         int tempCalories = 0;
@@ -188,6 +198,7 @@ public class Intake extends AppCompatActivity {
         }
     }
 
+    // Simple function that will clear out all of our input elements
     public void ClearFields(View view){
         EditText inputCarbs = findViewById(R.id.inputCarbs);
         EditText inputFats = findViewById(R.id.inputFats);

@@ -18,6 +18,8 @@ public class DisplayIBW extends AppCompatActivity {
         TextView results = findViewById(R.id.results);
         TextView range = findViewById(R.id.range);
 
+        // If the user has entered information, or there is information in "profile".txt,
+        // we can calculate with those values
         if (MainActivity.informationEntered) {
             // -------------   Get information from Main Page
             Bundle IBWBundle = getIntent().getExtras();
@@ -36,6 +38,8 @@ public class DisplayIBW extends AppCompatActivity {
                     + Math.round(upperIbw) + " pounds");
             range.setText(Math.round(lowerIbw) + " - " + Math.round(upperIbw));
         }
+
+        // If there is no information in "profile.txt" they will need to go enter values first.
         else{
             results.setText("No Information to display.\nEnter body values first.");
         }

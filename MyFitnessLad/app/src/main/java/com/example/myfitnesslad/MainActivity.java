@@ -233,8 +233,6 @@ public class MainActivity extends AppCompatActivity {
                         informationEntered = true;
                     }
                     String tempDate = (splitStr[6]);
-                    System.out.println("Date Today: " + dateToday);
-                    System.out.println("Date Temp: " + tempDate);
                     if (!tempDate.equals(dateToday)){
                         dateToday = (splitStr[6]);
                         fis.close();

@@ -30,10 +30,11 @@ public class ResetValues extends AppCompatActivity {
         setContentView(R.layout.activity_reset);
     }
 
-
+    // When the submit button is pressed, this function will apply the user's values into the
+    // respective variables
     public void apply(View view){
 
-        // Grab the fields
+        // Grab the fields/elements
         EditText heightField = findViewById(R.id.height);
         EditText weightField = findViewById(R.id.weight);
         EditText ageField = findViewById(R.id.age);
@@ -46,9 +47,13 @@ public class ResetValues extends AppCompatActivity {
 
         TextView errorMessage = findViewById(R.id.error);
 
+
+        // This will take all the values, ensure that they have been entered as positive integers
+        // and apply them accordingly.
+        // -Data Validation in effect-
+
         try {
             int heightValue = Integer.parseInt(heightField.getText().toString());
-
             int ageValue = Integer.parseInt(ageField.getText().toString());
             float weightValue = Float.parseFloat(weightField.getText().toString());
 
@@ -64,11 +69,9 @@ public class ResetValues extends AppCompatActivity {
 
             // Checking and setting Gender
             if (male.isChecked()){
-                //MainActivity.setGender(true);
                 genderValue = "Male";
             }
             else if (female.isChecked()){
-                //MainActivity.setGender(false);
                 genderValue = "Female";
             }
             else{
@@ -77,19 +80,15 @@ public class ResetValues extends AppCompatActivity {
 
             // Checking and setting Activity Level
             if (activityNone.isChecked()){
-                //MainActivity.setActivityLevel(0);
                 activityLevel = "0";
             }
             else if (activity1to3.isChecked()){
-                //MainActivity.setActivityLevel(1);
                 activityLevel = "1";
             }
             else if (activity4to5.isChecked()){
-                //MainActivity.setActivityLevel(2);
                 activityLevel = "2";
             }
             else if (activity6to7.isChecked()){
-                //MainActivity.setActivityLevel(3);
                 activityLevel = "3";
             }
             else{
@@ -100,13 +99,13 @@ public class ResetValues extends AppCompatActivity {
             MainActivity.informationEntered = true;
             Toast.makeText(this, "Body Parameters Saved", Toast.LENGTH_SHORT).show();
 
+            // Call the SaveData function to save our variables into the "profile.txt"
             SaveData(heightString, weightString, ageString, genderValue, activityLevel);
 
-            // Get back to the Main Activity
-            //Intent mainIntent = new Intent(this, MainActivity.class);
-            //startActivity(mainIntent);
+            // After Saving, Close/End this activity
             finish();
 
+            // Let's the user's know what went wrong.
         } catch (InputMismatchException e){
             errorMessage.setText("ERROR: Height, weight, and age must be greater than 0.");
         } catch (Exception e){
@@ -115,6 +114,8 @@ public class ResetValues extends AppCompatActivity {
 
     }
 
+    // This function will take all the values associated with our previous function and write them
+    // to "profile.txt" file. It will also attach a timestamp to it as well.
     void SaveData(String heightValue, String weightValue, String ageValue, String genderValue, String activityLevel) {
 
         String strDate = "";
@@ -125,7 +126,6 @@ public class ResetValues extends AppCompatActivity {
         }
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         strDate = dateFormat.format(date);
-        System.out.println(strDate);
 
         FileOutputStream fos = null;
 
@@ -151,7 +151,6 @@ public class ResetValues extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-
         }
     }
 }

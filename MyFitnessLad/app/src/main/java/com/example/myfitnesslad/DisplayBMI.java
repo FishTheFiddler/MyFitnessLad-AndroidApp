@@ -18,6 +18,8 @@ public class DisplayBMI extends AppCompatActivity {
         TextView results = findViewById(R.id.results);
         TextView currentBmi = findViewById(R.id.currentBmi);
 
+        // If the user has entered information, or there is information in "profile".txt,
+        // we can calculate with those values
         if (MainActivity.informationEntered) {
             // -------------   Get information from Main Page
             Bundle BMIBundle = getIntent().getExtras();
@@ -33,11 +35,14 @@ public class DisplayBMI extends AppCompatActivity {
                     + ".\nAccording to the CDC guidelines, you are " + bmiState);
             currentBmi.setText("" + bmi);
         }
+
+        // If there is no information in "profile.txt" they will need to go enter values first.
         else{
             results.setText("No Information to display.\nEnter body values first.");
         }
     }
 
+    // Take in parameters and calculate the BMI of the user.
     float calculateBMI(float height, float weight){
         // Calculate the BMI given the user's height and weight.
         float tempBmi = (weight * 703) / (float) Math.pow(height, 2);
@@ -46,10 +51,12 @@ public class DisplayBMI extends AppCompatActivity {
         return  (float) (Math.round(tempBmi * 100.0) / 100.0);
     }
 
+    // This function will calculate the overall state of the BMI
+    // AKA - assign an output string message to the BMI and its color coded result.
     String calculateBMIState(float bmi){
         TextView currentBmi = findViewById(R.id.currentBmi);
 
-        // Calculate the state of the person's health based on their weight.
+        // Calculate the state of the person's health based on their BMI.
         if (bmi < 18.5){
             currentBmi.setTextColor(Color.YELLOW);
             return "Underweight";

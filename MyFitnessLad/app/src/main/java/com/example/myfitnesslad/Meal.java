@@ -2,11 +2,13 @@ package com.example.myfitnesslad;
 
 public class Meal {
 
+    // Private vars that make up our Meal
     private int calories;
     private int carbs;
     private int fat;
     private int protein;
 
+    // Basic construction requires 4 parameters
     public Meal (int calories, int carbs, int fat, int protein){
         this.calories = calories;
         this.carbs = carbs;
@@ -43,12 +45,12 @@ public class Meal {
         return this.protein;
     }
 
-    //Calorie Calculation from carbs, fats and protein (in grams)
+    // Calorie Calculation from carbs, fats and protein (in grams)
     public int calculateCalories() {
         return (carbs*4)+(protein*4)+(fat*9);
     }
 
-    //TODO: when person class is implemented have this function have a gender parameter
+    // This will Calculate if there is an excess of one thing.
     public boolean ocCalories(int totalCalories)
     {
         if (totalCalories > 2250){
@@ -58,14 +60,14 @@ public class Meal {
     }
     public boolean ocCarbs(int totalCarbs)
     {
-        if (totalCarbs > 350){
+        if (totalCarbs > 150){
             return true;
         }
         return false;
     }
     public boolean ocFats(int totalFats)
     {
-        if (totalFats > 80){
+        if (totalFats > 40){
             return true;
         }
         return false;

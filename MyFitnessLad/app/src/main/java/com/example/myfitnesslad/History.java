@@ -20,10 +20,12 @@ public class History extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // Use the activity_history.xml file
         setContentView(R.layout.activity_history);
-
+        // On creation, display the history
         DisplayHistory();
     }
 
+    // This will open our "meals.txt" and read from it. It will read it line by line and output it
+    // into the blank text box.
     void DisplayHistory(){
         FileInputStream fis = null;
 
@@ -56,6 +58,7 @@ public class History extends AppCompatActivity {
         }
     }
 
+    // This will open "meals.txt" (history) and overwrite with a blank string. (clearing history)
     public void ResetHistory(View view) {
 
         FileOutputStream fos = null;
@@ -92,6 +95,8 @@ public class History extends AppCompatActivity {
                 }
             }
         }
+        // After clearing the history, we re-call Display function to read the file and display
+        // it accordingly.
         DisplayHistory();
     }
 }
