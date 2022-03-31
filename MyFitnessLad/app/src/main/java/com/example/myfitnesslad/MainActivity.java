@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
     public static void setAge(int age2){
         age = age2;
     }
-    public float getAge(){
+    public int getAge(){
         return this.age;
     }
 
@@ -234,8 +234,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                     String tempDate = (splitStr[6]);
                     if (!tempDate.equals(dateToday)){
-                        dateToday = (splitStr[6]);
+                        (splitStr[6]) = dateToday;
                         fis.close();
+
                         FileOutputStream fos = null;
                         try {
                             fos = openFileOutput("caloriesConsumed.txt", MODE_PRIVATE);
@@ -251,6 +252,31 @@ public class MainActivity extends AppCompatActivity {
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
+                            }
+                        }
+                    }
+                    FileOutputStream fos = null;
+                    try {
+                        if (informationEntered = true) {
+                            fos = openFileOutput("profile.txt", MODE_PRIVATE);
+                            fos.write((getHeight() + ", ").getBytes());
+                            fos.write((getWeight() + ", ").getBytes());
+                            fos.write((getAge() + ", ").getBytes());
+                            fos.write((IdentifyGender() + ", ").getBytes());
+                            fos.write((getActivityLevel() + ", ").getBytes());
+                            fos.write(("true" + ", ").getBytes());
+                            fos.write((dateToday + ", ").getBytes());
+                        }
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        if (fos != null) {
+                            try {
+                                fos.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
                         }
                     }

@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.InputMismatchException;
 
 public class Intake extends AppCompatActivity {
 
@@ -35,6 +36,7 @@ public class Intake extends AppCompatActivity {
         EditText inputCalories = findViewById(R.id.inputCalories);
         TextView totalCalories = findViewById(R.id.totalCalories);
         TextView ocBox = findViewById(R.id.ocBox);
+        TextView errorBox = findViewById(R.id.errorBox);
         // Create a new instance of the "Meal.java" class
         Meal meal;
 
@@ -47,59 +49,66 @@ public class Intake extends AppCompatActivity {
         // If the calorie box DOES have values in it,  then that is our calorie value and we
         // can proceed by creating a new meal with that information
         // ------------------------------------------------------
-        // If the calorie box DOESN'T values in it,  then we will grab values from our other fields
+        // If the calorie box DOESN'T have values in it,  then we will grab values from our other fields
         // and create a meal that way. Those parameters will calculate our calories later.
-        if (!inputCalories.getText().toString().isEmpty()) {
-            calorieInput = Integer.parseInt(inputCalories.getText().toString());
-            meal = new Meal(calorieInput,carbsInput, fatsInput, proteinInput);
-        } else {
-            carbsInput = Integer.parseInt(inputCarbs.getText().toString());
-            fatsInput = Integer.parseInt(inputFats.getText().toString());
-            proteinInput = Integer.parseInt(inputProtein.getText().toString());
-            meal = new Meal(calorieInput,carbsInput, fatsInput, proteinInput);
-        }
-
-        // If the calorie box DOES have values in it, this will be overlooked
-        // ------------------------------------------------------
-        // If the calorie box DOESN'T values in it, this will calculate the calories using other
-        // values.
-        if (calorieInput <= 0) {
-            calorieInput = meal.calculateCalories();
-            System.out.println(calorieInput);
-            String s = "";
-            if (meal.ocCalories(calorieInput)) {
-                s += "Overall high calorie intake! ";
-            }
-            if (meal.ocCarbs(carbsInput)) {
-                s += "High carbohydrate intake! ";
-            }
-            if (meal.ocFats(fatsInput)) {
-                s += "High fat intake! ";
-            }
-            if (meal.ocProtein(proteinInput)) {
-                s += "High protein intake! ";
-            }
-            if (s == "") {
-                s += "Balanced";
-            }
-            ocBox.setText(s);
-            totalCalories.setText("" + calorieInput);
-        } else {
-            totalCalories.setText("" + inputCalories.getText().toString());
-            if (calorieInput < 2200) {
-                ocBox.setText("Balanced");
-            } else {
-                ocBox.setText("Overall high calorie intake!");
-            }
-        }
-
-        // Once we ahve calculated how many calories we have consumed, we must save this
-        // information to our "meals.txt" (history) and to our "caloriesConsumed.txt"
         try {
-            AddCaloriesConsumed(calorieInput);
-            SaveData(String.valueOf(calorieInput));
-        } catch (IOException e) {
+            if (!inputCalories.getText().toString().isEmpty()) {
+                calorieInput = Integer.parseInt(inputCalories.getText().toString());
+                meal = new Meal(calorieInput, carbsInput, fatsInput, proteinInput);
+                errorBox.setText("");
+            } else {
+                carbsInput = Integer.parseInt(inputCarbs.getText().toString());
+                fatsInput = Integer.parseInt(inputFats.getText().toString());
+                proteinInput = Integer.parseInt(inputProtein.getText().toString());
+                meal = new Meal(calorieInput, carbsInput, fatsInput, proteinInput);
+                errorBox.setText("");
+            }
+
+            // If the calorie box DOES have values in it, this will be overlooked
+            // ------------------------------------------------------
+            // If the calorie box DOESN'T values in it, this will calculate the calories using other
+            // values.
+            if (calorieInput <= 0) {
+                calorieInput = meal.calculateCalories();
+                System.out.println(calorieInput);
+                String s = "";
+                if (meal.ocCalories(calorieInput)) {
+                    s += "Overall high calorie intake! ";
+                } else if (meal.ocCarbs(carbsInput)) {
+                    s += "High carbohydrate intake! ";
+                } else if (meal.ocFats(fatsInput)) {
+                    s += "High fat intake! ";
+                } else if (meal.ocProtein(proteinInput)) {
+                    s += "High protein intake! ";
+                } else if (s == "") {
+                    s += "Balanced";
+                }
+                ocBox.setText(s);
+                totalCalories.setText("" + calorieInput);
+            } else {
+                totalCalories.setText("" + inputCalories.getText().toString());
+                if (calorieInput < 2200) {
+                    ocBox.setText("Balanced");
+                } else if (calorieInput >= 2200) {
+                    ocBox.setText("Overall high calorie intake!");
+                }
+            }
+        } catch (InputMismatchException e) {
+            errorBox.setText("ERROR: All fields must be equal to or greater to 0. Only whole numbers.");
             e.printStackTrace();
+        } catch (Exception e) {
+            errorBox.setText("ERROR: Fill out either top field, or bottom 3.");
+            e.printStackTrace();
+        }
+        // Once we have calculated how many calories we have consumed, we must save this
+        // information to our "meals.txt" (history) and to our "caloriesConsumed.txt"
+        if (calorieInput != 0){
+            try {
+                AddCaloriesConsumed(calorieInput);
+                SaveData(String.valueOf(calorieInput));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
