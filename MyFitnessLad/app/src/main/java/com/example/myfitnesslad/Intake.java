@@ -70,17 +70,20 @@ public class Intake extends AppCompatActivity {
             if (meal.ocCalories(calorieInput)) {
                 s += "Overall high calorie intake! ";
             }
-            if (meal.ocCarbs(carbsInput)) {
+            else if (meal.ocCarbs(carbsInput)) {
                 s += "High carbohydrate intake! ";
             }
-            if (meal.ocFats(fatsInput)) {
+            else if (meal.ocFats(fatsInput)) {
                 s += "High fat intake! ";
             }
-            if (meal.ocProtein(proteinInput)) {
+            else if (meal.ocProtein(proteinInput)) {
                 s += "High protein intake! ";
             }
-            if (s == "") {
+            else if (s == "") {
                 s += "Balanced";
+            }
+            else {
+                throw new Exception();
             }
             ocBox.setText(s);
             totalCalories.setText("" + calorieInput);
@@ -88,12 +91,16 @@ public class Intake extends AppCompatActivity {
             totalCalories.setText("" + inputCalories.getText().toString());
             if (calorieInput < 2200) {
                 ocBox.setText("Balanced");
-            } else {
+            }
+            else if (calorieInput >= 2200) {
                 ocBox.setText("Overall high calorie intake!");
+            }
+            else {
+                throw new Exception();
             }
         }
 
-        // Once we ahve calculated how many calories we have consumed, we must save this
+        // Once we have calculated how many calories we have consumed, we must save this
         // information to our "meals.txt" (history) and to our "caloriesConsumed.txt"
         try {
             AddCaloriesConsumed(calorieInput);
