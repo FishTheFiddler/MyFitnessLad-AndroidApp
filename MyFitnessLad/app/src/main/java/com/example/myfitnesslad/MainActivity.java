@@ -179,6 +179,9 @@ public class MainActivity extends AppCompatActivity {
         TextView loseValue = findViewById(R.id.loseWeight);
         TextView maintainValue = findViewById(R.id.maintainWeight);
         TextView gainValue = findViewById(R.id.gainWeight);
+        TextView loseValueRemaining = findViewById(R.id.loseWeightRemaining);
+        TextView maintainValueRemaining = findViewById(R.id.maintainWeightRemaining);
+        TextView gainValueRemaining = findViewById(R.id.gainWeightRemaining);
         TextView consumeValue = findViewById(R.id.consumed);
 
         if (informationEntered){
@@ -187,6 +190,10 @@ public class MainActivity extends AppCompatActivity {
             maintainValue.setText("" + (maintenanceCalories));
             gainValue.setText("" + (maintenanceCalories + 450));
             consumeValue.setText("" + caloriesConsumed);
+
+            loseValueRemaining.setText("" + ((maintenanceCalories - 450) - caloriesConsumed));
+            maintainValueRemaining.setText("" + (maintenanceCalories - caloriesConsumed));
+            gainValueRemaining.setText("" + ((maintenanceCalories + 450) - caloriesConsumed));
         }
 
         else {
@@ -194,6 +201,9 @@ public class MainActivity extends AppCompatActivity {
             maintainValue.setText("N/A");
             gainValue.setText("N/A");
             consumeValue.setText("N/A");
+            loseValueRemaining.setText("N/A");
+            maintainValueRemaining.setText("N/A");
+            gainValueRemaining.setText("N/A");
         }
     }
 
