@@ -1,5 +1,6 @@
 package com.example.myfitnesslad;
 
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -13,8 +14,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.InputMismatchException;
 
 public class Intake extends AppCompatActivity {
@@ -118,11 +122,16 @@ public class Intake extends AppCompatActivity {
 
         LocalTime time = null;
         String finalTime = "";
+        String finalDate = "";
+        Date date = null;
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             DateTimeFormatter formattedTime = DateTimeFormatter.ofPattern("HH:mm");
             time = LocalTime.now();
             finalTime = time.format(formattedTime);
+            date = Calendar.getInstance().getTime();
+            DateFormat dateFormat = new SimpleDateFormat("MM-dd");
+            finalDate = dateFormat.format(date);
         }
         else{
             finalTime = "";
@@ -132,7 +141,7 @@ public class Intake extends AppCompatActivity {
 
         try {
             fos = openFileOutput("meals.txt", MODE_APPEND);
-            fos.write(("At " + finalTime + " hours, you ate " + calories + " cal").getBytes());
+            fos.write((finalDate +" " + finalTime + " - " + calories + " cal consumed").getBytes());
             fos.write("\n".getBytes());
 
             Toast.makeText(this, "Saved to " + getFilesDir() + "/meals.txt",
