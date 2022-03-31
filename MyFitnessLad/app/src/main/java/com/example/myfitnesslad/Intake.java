@@ -2,6 +2,7 @@ package com.example.myfitnesslad;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -38,27 +39,26 @@ public class Intake extends AppCompatActivity {
         EditText inputCalories = findViewById(R.id.inputCalories);
         TextView totalCalories = findViewById(R.id.totalCalories);
         TextView ocBox = findViewById(R.id.ocBox);
+        Meal meal;
 
-        int calorieInput = 0;
+        int calorieInput = 0, carbsInput = 0, fatsInput = 0, proteinInput = 0;
 
-        //int carbsInput = 0;
-        //int fatsInput = 0;
-        //int proteinInput = 0;
-
-        int carbsInput = Integer.parseInt(inputCarbs.getText().toString());
-        int fatsInput = Integer.parseInt(inputFats.getText().toString());
-        int proteinInput = Integer.parseInt(inputProtein.getText().toString());
         if (!inputCalories.getText().toString().isEmpty()) {
             calorieInput = Integer.parseInt(inputCalories.getText().toString());
+            meal = new Meal(calorieInput,carbsInput, fatsInput, proteinInput);
+        } else {
+            carbsInput = Integer.parseInt(inputCarbs.getText().toString());
+            fatsInput = Integer.parseInt(inputFats.getText().toString());
+            proteinInput = Integer.parseInt(inputProtein.getText().toString());
+            meal = new Meal(calorieInput,carbsInput, fatsInput, proteinInput);
         }
-
-        Meal meal = new Meal(carbsInput, fatsInput, proteinInput);
-        int tempCalories = meal.calculateCalories();
 
         //override when user knows calories
         if (calorieInput <= 0) {
+            calorieInput = meal.calculateCalories();
+            System.out.println(calorieInput);
             String s = "";
-            if (meal.ocCalories(tempCalories)) {
+            if (meal.ocCalories(calorieInput)) {
                 s += "Overall high calorie intake! ";
             }
             if (meal.ocCarbs(carbsInput)) {
@@ -74,19 +74,22 @@ public class Intake extends AppCompatActivity {
                 s += "Balanced";
             }
             ocBox.setText(s);
-            totalCalories.setText("" + tempCalories);
+            totalCalories.setText("" + calorieInput);
         } else {
+            System.out.println("ANOTHER ELSE");
             totalCalories.setText("" + inputCalories.getText().toString());
             if (calorieInput < 2200) {
+                System.out.println("1");
                 ocBox.setText("Balanced");
             } else {
+                System.out.println("2");
                 ocBox.setText("Overall high calorie intake!");
             }
         }
 
         try {
-            AddCaloriesConsumed(Integer.parseInt(inputCalories.getText().toString()));
-            SaveData(inputCalories.getText().toString());
+            AddCaloriesConsumed(calorieInput);
+            SaveData(String.valueOf(calorieInput));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -95,7 +98,6 @@ public class Intake extends AppCompatActivity {
     // Will save the calorie information along with a time stamp
     void SaveData(String calories) throws IOException {
 
-        // MainActivity.caloriesConsumed += Integer.parseInt(calories);
 
         LocalTime time = null;
         String finalTime = "";
@@ -112,7 +114,6 @@ public class Intake extends AppCompatActivity {
         FileOutputStream fos = null;
 
         try {
-            //String output = String.valueOf(tempCalories);
             fos = openFileOutput("meals.txt", MODE_APPEND);
             fos.write(("At " + finalTime + " hours, you ate " + calories + " cal").getBytes());
             fos.write("\n".getBytes());
@@ -170,7 +171,6 @@ public class Intake extends AppCompatActivity {
 
         FileOutputStream fos = null;
         try {
-            //String output = String.valueOf(tempCalories);
             fos = openFileOutput("caloriesConsumed.txt", MODE_PRIVATE);
             fos.write(String.valueOf(tempCalories).getBytes());
         } catch (FileNotFoundException e) {
@@ -201,5 +201,3 @@ public class Intake extends AppCompatActivity {
     }
 
 }
-
-        //TODO: SEND CALORIE DATA TO MAIN

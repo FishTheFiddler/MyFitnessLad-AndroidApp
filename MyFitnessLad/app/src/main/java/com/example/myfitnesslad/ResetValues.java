@@ -1,6 +1,7 @@
 package com.example.myfitnesslad;
 
-import android.content.Intent;
+
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.InputMismatchException;
 
 public class ResetValues extends AppCompatActivity {
@@ -92,9 +97,6 @@ public class ResetValues extends AppCompatActivity {
             }
 
 
-            /*MainActivity.setHeight(heightValue);
-            MainActivity.setWeight(weightValue);
-            MainActivity.setAge(ageValue);*/
             MainActivity.informationEntered = true;
             Toast.makeText(this, "Body Parameters Saved", Toast.LENGTH_SHORT).show();
 
@@ -114,6 +116,17 @@ public class ResetValues extends AppCompatActivity {
     }
 
     void SaveData(String heightValue, String weightValue, String ageValue, String genderValue, String activityLevel) {
+
+        String strDate = "";
+        Date date = null;
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            date = Calendar.getInstance().getTime();
+        }
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        strDate = dateFormat.format(date);
+        System.out.println(strDate);
+
         FileOutputStream fos = null;
 
         try {
@@ -124,6 +137,7 @@ public class ResetValues extends AppCompatActivity {
             fos.write((genderValue + ", ").getBytes());
             fos.write((activityLevel + ", ").getBytes());
             fos.write(("true" + ", ").getBytes());
+            fos.write((strDate + ", ").getBytes());
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

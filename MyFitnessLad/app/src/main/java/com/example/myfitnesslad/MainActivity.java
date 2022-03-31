@@ -3,6 +3,7 @@ package com.example.myfitnesslad;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,9 +13,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,19 +59,19 @@ public class MainActivity extends AppCompatActivity {
 
     // This function will load the Body Mass Index activity to calculate your BMI
     public void BMI(View view) {
-       // Create Intent for DisplayBMI Activity
-       Intent BMIIntent = new Intent(this, DisplayBMI.class);
+        // Create Intent for DisplayBMI Activity
+        Intent BMIIntent = new Intent(this, DisplayBMI.class);
 
-       BMIIntent.putExtra("Height", getHeight());
-       BMIIntent.putExtra("Weight", getWeight());
+        BMIIntent.putExtra("Height", getHeight());
+        BMIIntent.putExtra("Weight", getWeight());
 
-       // Log that we are creating an intent
-       Log.d(this.getLocalClassName(),"Creating intent with a height of " +
-                       getHeight() + " inches, and a weight of " + getWeight() + " pounds");
+        // Log that we are creating an intent
+        Log.d(this.getLocalClassName(),"Creating intent with a height of " +
+                getHeight() + " inches, and a weight of " + getWeight() + " pounds");
 
-       // Start the next activity
-       startActivity(BMIIntent);
-   }
+        // Start the next activity
+        startActivity(BMIIntent);
+    }
 
     // This function will load the Ideal body Weight activity to calculate your IBW
     public void IBW(View view) {
@@ -196,6 +201,15 @@ public class MainActivity extends AppCompatActivity {
     void ReadFile(){
         FileInputStream fis = null;
 
+        String dateToday = "";
+        Date date = null;
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            date = Calendar.getInstance().getTime();
+        }
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateToday = dateFormat.format(date);
+
         try {
             fis = openFileInput("profile.txt");
             InputStreamReader isr = new InputStreamReader(fis);
@@ -204,19 +218,43 @@ public class MainActivity extends AppCompatActivity {
 
             while ((text = br.readLine()) != null) {
                 String[] splitStr=text.split(", ");
-                if(splitStr.length == 6){
+                if(splitStr.length == 7){
                     setHeight(Integer.parseInt(splitStr[0]));
                     setWeight(Float.parseFloat(splitStr[1]));
                     setAge(Integer.parseInt(splitStr[2]));
                     String gender = (splitStr[3]);
-                        if (gender.equals("Male")){
-                            setGender(true);
-                        } else {
-                            setGender(false);
-                        }
+                    if (gender.equals("Male")){
+                        setGender(true);
+                    } else {
+                        setGender(false);
+                    }
                     setActivityLevel(Integer.parseInt(splitStr[4]));
                     if ((splitStr[5]).equals("true")){
                         informationEntered = true;
+                    }
+                    String tempDate = (splitStr[6]);
+                    System.out.println("Date Today: " + dateToday);
+                    System.out.println("Date Temp: " + tempDate);
+                    if (!tempDate.equals(dateToday)){
+                        dateToday = (splitStr[6]);
+                        fis.close();
+                        FileOutputStream fos = null;
+                        try {
+                            fos = openFileOutput("caloriesConsumed.txt", MODE_PRIVATE);
+                            fos.write("0".getBytes());
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } finally {
+                            if (fos != null) {
+                                try {
+                                    fos.close();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -271,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // This function simply results in turning a gender boolean into a string to be readable.
-     String IdentifyGender(){
+    String IdentifyGender(){
         if (getGender()){
             return "Male";
         }
