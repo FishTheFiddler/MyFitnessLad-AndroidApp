@@ -16,7 +16,10 @@ public class DisplayIBW extends AppCompatActivity {
         setContentView(R.layout.activity_ibw);
 
         TextView results = findViewById(R.id.results);
+        TextView range = findViewById(R.id.range);
 
+        // If the user has entered information, or there is information in "profile".txt,
+        // we can calculate with those values
         if (MainActivity.informationEntered) {
             // -------------   Get information from Main Page
             Bundle IBWBundle = getIntent().getExtras();
@@ -33,12 +36,16 @@ public class DisplayIBW extends AppCompatActivity {
                     + " inch " + gender + ", weighing in at " + weight
                     + " pounds.\n\nYour ideal body weight range is " + Math.round(lowerIbw) + " - "
                     + Math.round(upperIbw) + " pounds");
+            range.setText(Math.round(lowerIbw) + " - " + Math.round(upperIbw));
         }
+
+        // If there is no information in "profile.txt" they will need to go enter values first.
         else{
             results.setText("No Information to display.\nEnter body values first.");
         }
     }
 
+    // Miller formula for calculating IBW
     float millerFormula(int height, String gender){
         if (gender.equals("Male")){
             return (float) ((56.2 + (1.41 * (height - 60))) * 2.2);
@@ -48,6 +55,7 @@ public class DisplayIBW extends AppCompatActivity {
         }
     }
 
+    //Hamwi formula for calculating IBW
     float hamwiFormula(int height, String gender){
         if (gender.equals("Male")){
             return (float) (106 + (6 * (height - 60)));
