@@ -43,9 +43,6 @@ public class Intake extends AppCompatActivity {
         // Create a new instance of the "Meal.java" class
         Meal meal;
 
-        /* TODO: This whole section requires Data validation. If a user enters a string or a
-           TODO: negative, it will just crash the app.  */
-
         // Declare and instantiate variables to 0.
         int calorieInput = 0, carbsInput = 0, fatsInput = 0, proteinInput = 0;
 
