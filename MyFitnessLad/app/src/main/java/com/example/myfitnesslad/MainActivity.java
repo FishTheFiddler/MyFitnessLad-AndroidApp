@@ -197,7 +197,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // This function will open the "profile.txt" file and insert the values into correct variables
+    // This function will open the "profile.txt" file and insert the values into correct variables.
+    // It will also detect if it is a new day. If it is, it will write 0 into "caloriesConsumed.txt"
+    // and update the date in "profile.txt"
     void ReadFile(){
         FileInputStream fis = null;
 
