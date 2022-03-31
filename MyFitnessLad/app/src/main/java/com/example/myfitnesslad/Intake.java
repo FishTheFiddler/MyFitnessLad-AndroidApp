@@ -28,7 +28,6 @@ public class Intake extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // Use the activity_intake.xml file
         setContentView(R.layout.activity_intake);
-
     }
 
     public void CreateMeal(View view) {
@@ -118,7 +117,6 @@ public class Intake extends AppCompatActivity {
 
     // Will save the calorie information along with a time stamp
     void SaveData(String calories) throws IOException {
-
 
         LocalTime time = null;
         String finalTime = "";
