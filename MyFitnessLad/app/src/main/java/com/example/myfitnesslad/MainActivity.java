@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 import android.graphics.Color;
 import android.icu.util.Calendar;
 >>>>>>> Stashed changes
@@ -137,12 +140,20 @@ public class MainActivity extends AppCompatActivity {
 
         if (informationEntered){
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             heightValue.setText("Height: " + getHeight() + " inches.");
             weightValue.setText("Weight: " + getWeight() + " pounds.");
             ageValue.setText("Age: " + getAge() + " years old.");
             genderValue.setText("Gender: " + IdentifyGender() + ".");
             activityLevelValue.setText("Activity Level (0-3): " + getActivityLevel());
 =======
+=======
+            //heightValue.setText("Height: " + getHeight() + " inches.");
+            //weightValue.setText("Weight: " + getWeight() + " pounds.");
+            //ageValue.setText("Age: " + getAge() + " years old.");
+            //genderValue.setText("Gender: " + IdentifyGender() + ".");
+            //activityLevelValue.setText("Activity Level (0-3): " + getActivityLevel());
+>>>>>>> Stashed changes
             int maintenanceCalories = (int) (getWeight() * 15);
             loseValue.setText("" + (maintenanceCalories - 450));
             maintainValue.setText("" + (maintenanceCalories));
@@ -167,6 +178,9 @@ public class MainActivity extends AppCompatActivity {
                 gainValueRemaining.setTextColor(Color.RED);
             else
                 gainValueRemaining.setTextColor(Color.GREEN);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         }
 
