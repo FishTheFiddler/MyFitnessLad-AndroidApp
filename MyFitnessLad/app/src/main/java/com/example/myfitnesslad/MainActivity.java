@@ -3,6 +3,11 @@ package com.example.myfitnesslad;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+<<<<<<< Updated upstream
+=======
+import android.graphics.Color;
+import android.icu.util.Calendar;
+>>>>>>> Stashed changes
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -131,11 +136,38 @@ public class MainActivity extends AppCompatActivity {
         TextView activityLevelValue = findViewById(R.id.activityLevel);
 
         if (informationEntered){
+<<<<<<< Updated upstream
             heightValue.setText("Height: " + getHeight() + " inches.");
             weightValue.setText("Weight: " + getWeight() + " pounds.");
             ageValue.setText("Age: " + getAge() + " years old.");
             genderValue.setText("Gender: " + IdentifyGender() + ".");
             activityLevelValue.setText("Activity Level (0-3): " + getActivityLevel());
+=======
+            int maintenanceCalories = (int) (getWeight() * 15);
+            loseValue.setText("" + (maintenanceCalories - 450));
+            maintainValue.setText("" + (maintenanceCalories));
+            gainValue.setText("" + (maintenanceCalories + 450));
+            consumeValue.setText("" + caloriesConsumed);
+
+            loseValueRemaining.setText("" + ((maintenanceCalories - 450) - caloriesConsumed));
+            maintainValueRemaining.setText("" + (maintenanceCalories - caloriesConsumed));
+            gainValueRemaining.setText("" + ((maintenanceCalories + 450) - caloriesConsumed));
+            int val1 = Integer.parseInt(loseValueRemaining.getText().toString());
+            if(val1<0)
+                loseValueRemaining.setTextColor(Color.RED);
+            else
+                loseValueRemaining.setTextColor(Color.GREEN);
+            int val2 = Integer.parseInt(maintainValueRemaining.getText().toString());
+            if(val2<0)
+                maintainValueRemaining.setTextColor(Color.RED);
+            else
+                maintainValueRemaining.setTextColor(Color.GREEN);
+            int val3 = Integer.parseInt(gainValueRemaining.getText().toString());
+            if(val3>0)
+                gainValueRemaining.setTextColor(Color.RED);
+            else
+                gainValueRemaining.setTextColor(Color.GREEN);
+>>>>>>> Stashed changes
         }
 
         else {
